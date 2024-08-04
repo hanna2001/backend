@@ -212,4 +212,8 @@ PUBSUB
     the published msg is in a channel
     the consumer subscibes a channel/topic
     when a new message arrives in a topic all the subsribers will be notified
-    
+
+CAR
+
+STATFUL/STATELESS :
+    stateless in best -> jwt -> not dependant of any data
