@@ -58,7 +58,158 @@ OSI:
 
         example receiver POST req to an HTTPS:
             Application  : 
+        
+IP:
+    a.b.c.d/x -> x network bits
+        example : 92.168.254.0/24
+            24(92.168.254) bits are network => 2^24 
+            8(0) => host
+    subnet mask : checks whether an IP is in the same subnet or not
 
+    Host A and B can directly communicate if both are in same subnet - MAC address
+
+    If A and B are in dif subnets : it will communicate through gateway
+
+    IP : header + data (20 + 16) bytes
+
+    time to live (number of routes/host) : avoid infinite loop : 128
+        TRACE ROUTE/ROUTER ROUTE when a packet's time to live becomes 0 -> icmp message is send to source ip
+
+    ECN :explicit congession notification
+
+    ICMP : Internet control message protocol 
+        level 3
+        sends infomational messages ->
+            - fragmentation needed
+            - host/port unreachable
+            - packet expiry
+        TCP black hole :  icmp is disabled, but fragmentation needed
+        trace route 
+
+        command : traceroute <ip>
+
+
+UDP:
+    layer 4
+    ports
+    stateless
+    no prior connection
+    ports - multiplexing and demultiplexing
+
+    header :8 byte
+
+    uses:
+        DNS :port 53
+        WebRTC
+        VPN
+
+    no handshake, no order, no reliability, no ack
+    used for attacks
+
+    flow control-> server can handle
+    congession control -> router can handle
+    easily spoofed
+
+TCP:
+    layer 4
+    ports
+    contols transmission
+    handshake => stateful
+
+    header : 20 byte
+
+    usecases:
+        bi directional connection
+        web 
+
+    connection -> layer 5 - session - file discriptor
+
+    a hash will be created with source port, src ip, dest port, dest ip and will be stored in the OS -> connection
+
+    retransmission
+
+    ack ackN => all packets to N (n-1,n-2..) are received
+
+TLS:
+    transport layer security
+    forward secrecy -> RSA -> ISP all are recorded
+    tls 1.3 -> 2 private keys and 1 public key is used
+
+HTTP :
+    req :
+        method : get/post/...
+        path : /about (after first /)
+        protocol : http 1/..
+        header : (key value pair) content len
+    
+    res : 
+
+    http is build on top of TCP => 1st step is connection
+
+    HTTP 1.0 -> new connection for each req -> only limited CPU
+        no buffereing
+        response should be send together
+
+
+    HTTP 1.1 ->
+        pipelining -> blocking for order -> disabled -> Line of order
+
+
+WEBSOCKET : 
+    bidirectional communication 
+    build on top of http 1.1
+
+    handshake :
+        get 1.1 upgrade
+        101 switching protocol
+
+HTTP 2 :
+    streams 
+
+    HTTP 1.1 -> in a tcp connection -> one req at a tym (busy)
+    client -> odd numbered streams
+    server -> even numbered streams
+
+    no order required -> but TCP has ordering
+
+    HTTP push : when sending req for index.html -> server also sends main.js index.css etc
+     -> wastage of resources , client may already cached
+
+    Pros :
+        streams (multiplexing over a single connection)
+        server push
+        secure by default (rules in routers, update routers)
+
+    Cons :
+        TCP head of line blocking ( tcp needs order, if a packect ex:2 is lost -> all other packets from 2 t oetc is dropped
+        server push
+        High CPU usage ( read all streams )
+
+
+HTTP 3 :
+    streams on top of UDP (QUIC)
+    in quic -> servers odd and client even number of streams
+    solves :
+        -> head of line blocking
+        -> 
+    pros :
+        connection + TLS -> one handshake (automatically)
+        congession control
+        connection migration (connection ID) -> when we switch network 
+            attacker can send its own data via connectionID
+        header compression algorithm
+
+
+
+
+
+
+
+
+
+
+
+    
         
 
 
