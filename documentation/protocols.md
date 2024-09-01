@@ -199,6 +199,139 @@ HTTP 3 :
             attacker can send its own data via connectionID
         header compression algorithm
 
+gRPC :
+    Google remote procedural call
+
+    HTTP 2
+
+    streams
+
+    protocol buffers (binary) : smaller payload and faster communication instead of XML/JSON
+
+    .proto is substitute for swagger open API
+
+    GRPC is faster compared to  HTTP => streaming/multiplexing (HTTP 2), binary data
+
+    gRPC modes :
+        unary : request/response
+            Fetching a user profile
+        client streaming (many req, one response)
+            Uploading a large file
+        server streaming (one req, many response)
+            Real-time data feed
+        bidirectional 
+            Chat application
+
+    no browser support (HTTP 2)
+        gRPC-Web: Allows gRPC to be used in web browsers by translating gRPC calls to HTTP/1.1 or HTTP/2
+
+    TLS encryption by default
+
+    Working :
+        create a service (.proto)
+        generate code from .proto (strongly typed languages) using protoc : protobuf compiler
+        set up server
+        set up client
+
+        in client a new stub is created
+        calls a service
+        req -> serialized and send
+        server -> deserialises -> works
+        response serialises
+        and sends to client
+
+
+    Microservices, internal APIs, real-time apps
+
+
+
+WebRTC :
+    peer to peer (no server in between)
+    earlier -> UDP
+    fast
+
+    default gateway:
+         device on a network that routes traffic from a local network to other networks, the internet (router)
+         Devices on a local network rely on the default gateway to access the internet
+
+    NAT : 
+        NETWORK ADDRESS TRANSLATION
+        one to one
+        address restricted
+        port restricted
+        symmetric
+    
+    STUN : 
+        SESSION TRAVERSAL UTILITIES for NAT
+        a server which gives the public ip and port of a System, through NAT
+
+    TURN : 
+        TRAVERSAL USING RELAYS around NAT
+        symmetic NAT
+        users a server to connect between machines
+        TURN server allocates an address, e.g., 198.51.100.20:3478, which is used as an intermediary to pass media between the peers
+
+    using STUN and TURN -> collects all ways that an external system can connect to the machine (local ip, ip from STUN (Reflexive addresses), ip from TURN (Relayed addresses)
+
+    ICE :
+        INTERACTIVE CONNECTIVITY ESTABLISHMENT
+        ice collects all local ip addresses, reflexive addresses 
+
+        {
+            "candidate": "candidate:842163049 1 udp 1677729535 192.168.1.5 58203 typ host",
+            "sdpMid": "audio",
+            "sdpMLineIndex": 0
+        }
+
+        {
+            "candidate": "candidate:842163049 1 udp 1677729535 203.0.113.45 58203 typ srflx raddr 192.168.1.5 rport 58203",
+            "sdpMid": "audio",
+            "sdpMLineIndex": 0
+        }
+
+        {
+            "candidate": "candidate:1010342407 1 udp 41885439 198.51.100.20 3478 typ relay raddr 192.168.1.5 rport 58203",
+            "sdpMid": "audio",
+            "sdpMLineIndex": 0
+        }
+
+        all these addresses are send thorugh SDP to the remote peer
+
+
+
+
+    SDP :
+        SESSION DESCIPTION PROTOCOL
+        includes ice candidates, networking options, security options, media options etc
+        SDP is the important part of the WebRTC
+
+    
+
+    Signaling the SDP :
+
+
+    Steps : A-localclient B-remoteclient
+        A wants to connect to B
+        A creates an OFFER (SDP)  -> all ice candidates , media, security etc
+        B gets the offer from A
+        B creates an ANSWER (response to OFFER) and sends to A
+        connection created
+
+
+        
+
+        
+    Pros:
+        Peer to Peer, low latency
+        Standarised API
+    
+    Cons:
+        STUN and TURN (more)
+        p2p fall for multiple
+
+
+
+
 
 
 
